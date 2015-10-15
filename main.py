@@ -1,15 +1,17 @@
-import sys
+from StringIO import StringIO
+from xml.dom.minidom import parseString
+
+import ConfigParser
+import gzip
+import itertools
 import json
+import oauth2
+import simplejson
+import sys
 import urllib
 import urllib2
 import urlparse
-import simplejson
-from xml.dom.minidom import parseString
 import xml.dom.minidom
-import oauth2
-import ConfigParser
-from StringIO import StringIO
-import gzip
 
 class OAuthClient:
     def __init__(self, key, secret, user, password):
