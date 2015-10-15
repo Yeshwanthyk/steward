@@ -95,9 +95,19 @@ class Github:
         self.get_url  = 'https://api.github.com/users/' + user + '/starred'
 
     def getBookmarks(self):
-        rsp = urllib2.urlopen(self.get_url)
-        data = json.load(rsp)
-        return [{'url' : b['url'], 'title' : b['name']} for b in data]
+
+        starred_repos = []
+
+        for page in itertools.count():
+            url = self.get_url + '?page=' + str(page)
+            print url
+            rsp = urllib2.urlopen(url)
+            data = json.load(rsp)
+
+            if len(data) == 0:
+                return starred_repos
+            else:
+                starred_repos.append([{'url' : b['url'], 'title' : b['name']} for b in data])
 
     def addBookmark(self, bookmark):
         raise Exception('Not supported')
